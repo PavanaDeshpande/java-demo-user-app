@@ -1,4 +1,5 @@
 package com.eazybytes.DemoUsersApplication.controller;
+import com.eazybytes.DemoUsersApplication.model.Role;
 import com.eazybytes.DemoUsersApplication.model.User;
 import com.eazybytes.DemoUsersApplication.service.UserService;
 import jakarta.validation.Valid;
@@ -55,4 +56,15 @@ public class UserController {
         }
         return ResponseEntity.ok(users);
     }
+//    @PostMapping("/{userId}/role")
+//    public ResponseEntity<Role> assignRole(@PathVariable Long userId, @RequestBody Role role) {
+//        Role savedRole = userService.assignRoleToUser(userId, role.getRoleName());
+//        return ResponseEntity.ok(savedRole);
+//    }
+//
+//    @GetMapping("/{userId}/role")
+//    public ResponseEntity<Role> getRole(@PathVariable Long userId) {
+//        return ResponseEntity.ok(userService.getRoleForUser(userId));
+//    }
+
 }
