@@ -1,8 +1,10 @@
 package com.eazybytes.DemoUsersApplication.service;
+import com.eazybytes.DemoUsersApplication.exception.UserAlreadyExistsException;
 import com.eazybytes.DemoUsersApplication.model.Role;
 import com.eazybytes.DemoUsersApplication.model.User;
 import com.eazybytes.DemoUsersApplication.repository.RoleRepository;
 import com.eazybytes.DemoUsersApplication.repository.UserRepository;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,8 +34,20 @@ public class UserService {
         return  userRepository.findByEmailAndName(email, name);
     }
     public User createUser(User user) {
-        return userRepository.save(user);
-    }
+        try {
+            return userRepository.save(user);
+        }
+//        } catch (Exception e) {
+//            throw new RuntimeException("not able to add "+e);
+//        }
+//            catch (DataIntegrityViolationException e) {
+//                throw new IllegalArgumentException("Email already exists or constraint violated");
+//            }
+        catch (Exception e) {
+            throw new UserAlreadyExistsException("Email exists, there is a conflict");
+        }
+
+        }
 
     public Optional<User> updateUser(Long id, User updatedUser) {
         return userRepository.findById(id).map(user -> {
