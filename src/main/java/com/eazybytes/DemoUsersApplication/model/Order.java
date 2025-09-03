@@ -17,7 +17,11 @@ public class Order {
     @JsonBackReference
     private User user;
 
-    // Getters and Setters
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    @JsonBackReference
+    private OrderCategory category;
+
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -25,5 +29,13 @@ public class Order {
     public void setProductName(String productName) { this.productName = productName; }
 
     public User getUser() { return user; }
-    public void setUser(User user) { this.user = user; }   // 🔹 This is required
+    public void setUser(User user) { this.user = user; }
+
+    public OrderCategory getCategory() {
+        return category;
+    }
+
+    public void setCategory(OrderCategory category) {
+        this.category = category;
+    }
 }

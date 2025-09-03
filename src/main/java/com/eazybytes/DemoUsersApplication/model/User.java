@@ -55,6 +55,10 @@ public class User {
     @JsonManagedReference
     private List<Order> orders;
 
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private OrderCategory category;
+
     public void setId(Long id) {
         this.id = id;
     }
