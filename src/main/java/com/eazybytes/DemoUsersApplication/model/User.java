@@ -21,6 +21,36 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String name;
+
+    @Column(name = "email")
+    @Email(message = "Email should be valid")
+    @NotBlank(message = "Email should be not blank")
+    @Pattern(
+            regexp = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$",
+            message = "Email format is invalid"
+    )
+    private String email;
+
+    @CreatedBy
+    @Column(updatable = false)
+    private String createdByUser;
+
+    @LastModifiedBy
+    @Column(insertable = false)
+    private String updatedByUser;
+
+    @CreatedDate
+    @Column(updatable = false)
+    private LocalDateTime createdAt;
+
+    @LastModifiedDate
+    private LocalDateTime updatedAt;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private Role role;
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -40,21 +70,6 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
-
-
-
-
-    private String name;
-
-    @Column(name = "email")
-    @Email(message = "Email should be valid")
-    @NotBlank(message = "Email should be not blank")
-    @Pattern(
-            regexp = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$",
-            message = "Email format is invalid"
-    )
-    private String email;
-
 
     public Long getId() {
         return id;
@@ -92,31 +107,11 @@ public class User {
         this.updatedAt = updatedAt;
     }
 
-    @CreatedBy
-    @Column(updatable = false)
-    private String createdByUser;
+    public Role getRole() {
+        return role;
+    }
 
-    @LastModifiedBy
-    @Column(insertable = false)
-    private String updatedByUser;
-
-    @CreatedDate
-    @Column(updatable = false)
-    private LocalDateTime createdAt;
-
-    @LastModifiedDate
-    private LocalDateTime updatedAt;
-
-//    public Role getRole() {
-//        return role;
-//    }
-//
-//    public void setRole(Role role) {
-//        this.role = role;
-//        role.setUser(this);
-//    }
-//
-//    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-//    @JsonManagedReference
-//    private Role role;
+    public void setRole(Role role) {
+        this.role = role;
+    }
 }

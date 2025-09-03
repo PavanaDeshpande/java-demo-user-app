@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
         import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/users")
@@ -28,10 +29,16 @@ public class UserController {
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
-
+    @GetMapping("/role/{id}")
+    public Role getRoleForUser(@PathVariable Long id){
+        return userService.getRoleForUser(id);
+    }
     @PostMapping
+//    public ResponseEntity<?> createUser(@Valid @RequestBody User user, @RequestParam String roleName) {
     public ResponseEntity<?> createUser(@Valid @RequestBody User user) {
+//        User savedUser = userService.createUser(user, roleName);
         User savedUser = userService.createUser(user);
+
         return ResponseEntity.ok(savedUser);
     }
 

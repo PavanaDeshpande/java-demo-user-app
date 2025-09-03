@@ -2,24 +2,19 @@ package com.eazybytes.DemoUsersApplication.service;
 import com.eazybytes.DemoUsersApplication.exception.UserAlreadyExistsException;
 import com.eazybytes.DemoUsersApplication.model.Role;
 import com.eazybytes.DemoUsersApplication.model.User;
-import com.eazybytes.DemoUsersApplication.repository.RoleRepository;
 import com.eazybytes.DemoUsersApplication.repository.UserRepository;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
 public class UserService {
     private final UserRepository userRepository;
-//    private final RoleRepository roleRepository;
-
-//    public UserService(UserRepository userRepository, RoleRepository roleRepository) {
     public UserService(UserRepository userRepository) {
 
         this.userRepository = userRepository;
-//        this.roleRepository=roleRepository;
     }
 
     public List<User> getAllUsers() {
@@ -33,8 +28,19 @@ public class UserService {
     public List<User> getUserByEmailAndname(String email, String name){
         return  userRepository.findByEmailAndName(email, name);
     }
+    public Role getRoleForUser(Long id){
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("User not found with id: " + id));;
+        return user.getRole();
+    }
     public User createUser(User user) {
+//        public User createUser(User user, String roleName) {
         try {
+            Role role = new Role();
+            role.setRoleName(user.getRole().getRoleName());
+            role.setUser(user);
+
+            user.setRole(role);
             return userRepository.save(user);
         }
 //        } catch (Exception e) {
@@ -53,8 +59,22 @@ public class UserService {
         return userRepository.findById(id).map(user -> {
             user.setName(updatedUser.getName());
             user.setEmail(updatedUser.getEmail());
+            Role role = user.getRole();
+            role.setRoleName(updatedUser.getRole().getRoleName());
+            user.setRole(role);
+            role.setUser(user);
             return userRepository.save(user);
         });
+//        Optional<User> optionalUser = userRepository.findById(id);
+//        if (optionalUser.isPresent()) {
+//            User user = optionalUser.get();
+//            user.setName(updatedUser.getName());
+//            user.setEmail(updatedUser.getEmail());
+//            user.getRole().setRoleName(updatedUser.getRole().getRoleName());
+//            return Optional.of(userRepository.save(user));
+//        } else {
+//            return Optional.empty();
+//        }
     }
 
     public void deleteUser(Long id) {
