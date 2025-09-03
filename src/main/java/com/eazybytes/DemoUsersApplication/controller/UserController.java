@@ -6,7 +6,7 @@ import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-        import java.util.List;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -63,15 +63,5 @@ public class UserController {
         }
         return ResponseEntity.ok(users);
     }
-//    @PostMapping("/{userId}/role")
-//    public ResponseEntity<Role> assignRole(@PathVariable Long userId, @RequestBody Role role) {
-//        Role savedRole = userService.assignRoleToUser(userId, role.getRoleName());
-//        return ResponseEntity.ok(savedRole);
-//    }
-//
-//    @GetMapping("/{userId}/role")
-//    public ResponseEntity<Role> getRole(@PathVariable Long userId) {
-//        return ResponseEntity.ok(userService.getRoleForUser(userId));
-//    }
 
 }

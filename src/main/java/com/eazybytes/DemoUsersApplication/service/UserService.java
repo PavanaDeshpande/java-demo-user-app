@@ -3,6 +3,8 @@ import com.eazybytes.DemoUsersApplication.exception.UserAlreadyExistsException;
 import com.eazybytes.DemoUsersApplication.model.Role;
 import com.eazybytes.DemoUsersApplication.model.User;
 import com.eazybytes.DemoUsersApplication.repository.UserRepository;
+import com.eazybytes.DemoUsersApplication.repository.OrderRepository;
+import com.eazybytes.DemoUsersApplication.model.Order;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,6 +14,7 @@ import java.util.Optional;
 @Service
 public class UserService {
     private final UserRepository userRepository;
+
     public UserService(UserRepository userRepository) {
 
         this.userRepository = userRepository;
