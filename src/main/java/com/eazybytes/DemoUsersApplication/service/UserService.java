@@ -81,21 +81,4 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-//    public Role assignRoleToUser(Long userId, String roleName) {
-//        User user = userRepository.findById(userId)
-//                .orElseThrow(() -> new RuntimeException("User not found"));
-//
-//        Role role = new Role();
-//        role.setRoleName(roleName);
-//        role.setUser(user);
-//
-//        user.setRole(role);
-//
-//        return roleRepository.save(role);
-//    }
-//
-//    public Role getRoleForUser(Long userId) {
-//        User user = userRepository.findById(userId).orElseThrow();
-//        return user.getRole();
-//    }
 }
