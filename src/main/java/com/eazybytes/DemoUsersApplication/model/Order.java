@@ -3,6 +3,9 @@ package com.eazybytes.DemoUsersApplication.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "orders")
 public class Order {
@@ -22,6 +25,15 @@ public class Order {
     @JsonBackReference
     private OrderCategory category;
 
+    @ManyToMany
+    @JoinTable(
+            name = "order_tags",
+            joinColumns = @JoinColumn(name = "order_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id")
+    )
+    @JsonBackReference
+    private List<Tag> tags = new ArrayList<>();
+
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -37,5 +49,13 @@ public class Order {
 
     public void setCategory(OrderCategory category) {
         this.category = category;
+    }
+
+    public List<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
     }
 }
