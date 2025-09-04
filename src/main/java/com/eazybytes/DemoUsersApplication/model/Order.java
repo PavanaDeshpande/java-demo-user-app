@@ -1,6 +1,7 @@
 package com.eazybytes.DemoUsersApplication.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -31,7 +32,8 @@ public class Order {
             joinColumns = @JoinColumn(name = "order_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id")
     )
-    @JsonBackReference
+//    @JsonBackReference
+    @JsonIgnore
     private List<Tag> tags = new ArrayList<>();
 
     public Long getId() { return id; }

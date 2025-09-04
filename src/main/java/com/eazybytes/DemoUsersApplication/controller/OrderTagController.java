@@ -14,6 +14,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/order")
+@CrossOrigin(origins = "http://localhost:3000")  // allow React frontend
 public class OrderTagController {
     private final OrderTagService orderTagService;
 
@@ -37,6 +38,7 @@ public class OrderTagController {
         return orderTagService.getAllTagsForAnOrder(orderId);
     }
     @GetMapping("/tag/{tagId}")
+    @ResponseBody
     public List<Order> getAllOrderForATag(@Valid @PathVariable Long tagId) {
 
         return orderTagService.getAllOrderForATag(tagId);

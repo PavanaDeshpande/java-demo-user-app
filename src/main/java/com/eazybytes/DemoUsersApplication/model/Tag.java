@@ -1,5 +1,6 @@
 package com.eazybytes.DemoUsersApplication.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
@@ -17,7 +18,7 @@ public class Tag {
     private String tagName;
 
     @ManyToMany(mappedBy = "tags")
-    @JsonManagedReference
+//    @JsonManagedReference
     private List<Order> orders = new ArrayList<>();
 
     public Long getId() {
