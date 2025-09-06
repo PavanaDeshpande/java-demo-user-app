@@ -6,12 +6,18 @@ import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.logging.FileHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
     private final UserService userService;
+    private static final Logger logger = Logger.getLogger(OrderController.class.getName());
 
     public UserController(UserService userService) {
         this.userService = userService;
@@ -23,7 +29,18 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable Long id) {
+    public ResponseEntity<User> getUserById(@PathVariable Long id) throws IOException {
+        FileHandler fileHandler = new FileHandler("app.log", true);
+        fileHandler.setFormatter(new SimpleFormatter()); // Important!
+        fileHandler.setLevel(Level.ALL); // Accept all levels
+
+        // Add handler to logger
+        logger.addHandler(fileHandler);
+        logger.setLevel(Level.ALL); // Ensure logger itself accepts all levels
+
+        // Log message
+        logger.info("Order fetched successfully: " + id);
+
         return userService.getUserById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
