@@ -3,6 +3,7 @@ import com.eazybytes.DemoUsersApplication.model.Role;
 import com.eazybytes.DemoUsersApplication.model.User;
 import com.eazybytes.DemoUsersApplication.service.UserService;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,6 +13,7 @@ import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
+import org.springframework.core.env.Environment;
 
 @RestController
 @RequestMapping("/api/users")
@@ -19,8 +21,15 @@ public class UserController {
     private final UserService userService;
     private static final Logger logger = Logger.getLogger(OrderController.class.getName());
 
-    public UserController(UserService userService) {
+    @Value("${app.name}")
+    private String appName;
+
+
+    private final Environment environment;
+
+    public UserController(UserService userService, Environment environment) {
         this.userService = userService;
+        this.environment = environment;
     }
 
     @GetMapping
@@ -30,6 +39,8 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<User> getUserById(@PathVariable Long id) throws IOException {
+        System.out.println("App Name: " + appName);
+        System.out.println(environment.getProperty("welcome.message", "Default Welcome Message"));
         FileHandler fileHandler = new FileHandler("app.log", true);
         fileHandler.setFormatter(new SimpleFormatter()); // Important!
         fileHandler.setLevel(Level.ALL); // Accept all levels

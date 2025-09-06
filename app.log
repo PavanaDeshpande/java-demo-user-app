@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+</log>
+Sept 06, 2025 6:35:58 PM com.eazybytes.DemoUsersApplication.controller.UserController getUserById
+INFO: Order fetched successfully: 40
+Sept 06, 2025 9:27:37 PM com.eazybytes.DemoUsersApplication.controller.UserController getUserById
+INFO: Order fetched successfully: 40
+Sept 06, 2025 9:33:34 PM com.eazybytes.DemoUsersApplication.controller.UserController getUserById
+INFO: Order fetched successfully: 40
+Sept 06, 2025 9:33:58 PM com.eazybytes.DemoUsersApplication.controller.UserController getUserById
+INFO: Order fetched successfully: 40
