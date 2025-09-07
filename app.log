@@ -10,3 +10,7 @@ Sept 06, 2025 9:33:34 PM com.eazybytes.DemoUsersApplication.controller.UserContr
 INFO: Order fetched successfully: 40
 Sept 06, 2025 9:33:58 PM com.eazybytes.DemoUsersApplication.controller.UserController getUserById
 INFO: Order fetched successfully: 40
+Sept 07, 2025 3:33:42 PM com.eazybytes.DemoUsersApplication.controller.UserController getUserById
+INFO: Order fetched successfully: 40
+Sept 07, 2025 3:33:49 PM com.eazybytes.DemoUsersApplication.controller.UserController getUserById
+INFO: Order fetched successfully: 40
