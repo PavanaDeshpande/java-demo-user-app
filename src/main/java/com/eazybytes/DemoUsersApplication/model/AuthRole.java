@@ -1,19 +1,20 @@
 package com.eazybytes.DemoUsersApplication.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
-@Entity
-@Table(name = "auth_role")
-public class AuthRole {
 
+@Entity
+public class AuthRole {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String roleName;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
+    @OneToOne
+    @JoinColumn(name = "user_id")  // FK in auth_role table
+    @JsonBackReference
     private AuthUser user;
 
     public Long getId() {
@@ -40,4 +41,3 @@ public class AuthRole {
         this.user = user;
     }
 }
-

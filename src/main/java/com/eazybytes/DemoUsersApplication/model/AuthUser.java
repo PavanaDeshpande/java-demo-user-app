@@ -1,22 +1,20 @@
 package com.eazybytes.DemoUsersApplication.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import java.util.Set;
 
 @Entity
-@Table(name = "auth_user")
 public class AuthUser {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String username;
-
     private String password;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Set<AuthRole> roles;
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private AuthRole role;
 
     public Long getId() {
         return id;
@@ -42,11 +40,11 @@ public class AuthUser {
         this.password = password;
     }
 
-    public Set<AuthRole> getRoles() {
-        return roles;
+    public AuthRole getRole() {
+        return role;
     }
 
-    public void setRoles(Set<AuthRole> roles) {
-        this.roles = roles;
+    public void setRole(AuthRole role) {
+        this.role = role;
     }
 }
