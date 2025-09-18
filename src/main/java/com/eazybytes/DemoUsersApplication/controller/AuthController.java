@@ -7,6 +7,7 @@ import com.eazybytes.DemoUsersApplication.model.AuthUser;
 import com.eazybytes.DemoUsersApplication.repository.AuthRoleRepository;
 import com.eazybytes.DemoUsersApplication.repository.AuthUserRepository;
 import com.eazybytes.DemoUsersApplication.service.AuthService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.Collections;
 
@@ -59,17 +62,29 @@ public class AuthController {
 
     @PostMapping("/loginUsingJSessionId")
     public String loginUserUsingJSessionId(@RequestParam String username,
-                                   @RequestParam String password,
-                                   HttpSession session) {
+                                           @RequestParam String password,
+                                           HttpServletRequest request) {
 
         boolean success = authService.loginUserUsingJSessionId(username, password);
 
         if (success) {
-            session.setAttribute("username", username); // store username in session
+            // Create Authentication and put into SecurityContext
+            UsernamePasswordAuthenticationToken auth =
+                    new UsernamePasswordAuthenticationToken(username, null, Collections.emptyList());
+
+            SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
+            securityContext.setAuthentication(auth);
+            SecurityContextHolder.setContext(securityContext);
+
+            // Store it in HttpSession (Spring Security will reuse it)
+            HttpSession session = request.getSession(true);
+            session.setAttribute("SPRING_SECURITY_CONTEXT", securityContext);
+
             return "Login successful for user: " + username;
         } else {
             return "Invalid credentials";
         }
     }
+
 
 }
